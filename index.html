@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoSmart | Smart Waste Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <canvas id="bg"></canvas>
+
+  <header class="nav">
+    <a class="logo" href="#dashboard"><span class="logo-mark">✦</span> EcoSmart</a>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#bins">Bins</a>
+      <a href="#report">Report</a>
+      <a href="#pickup">Pickup</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#guide">Guide</a>
+      <a href="#qa">Ask AI</a>
+    </nav>
+    <div class="nav-tools">
+      <div class="clock-control"><span class="clock-label">TIME</span><strong id="liveClock">--:--:--</strong><select id="timeZone" aria-label="Choose clock timezone"><option value="local">Local</option><option value="Asia/Kolkata">India</option><option value="UTC">UTC</option><option value="America/New_York">New York</option><option value="Europe/London">London</option></select></div>
+      <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch theme"><span id="themeIcon">◐</span></button>
+    </div>
+  </header>
+
+  <section class="hero" id="dashboard">
+    <div class="hero-copy">
+      <p class="eyebrow">CITY OPERATIONS · LIVE CONTROL CENTER</p>
+      <h1>Cleaner streets,<br><span>calmer cities.</span></h1>
+      <p>See what needs attention, move crews with confidence, and keep every neighborhood in motion.</p>
+      <div class="hero-actions"><a class="button primary" href="#bins">View live bins <span>↗</span></a><a class="text-link" href="#guide">Learn about sorting <span>→</span></a></div>
+    </div>
+    <div class="hero-orbit" aria-hidden="true"><div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div><div class="orbit-core"><span>♻</span><small>ECOSYSTEM<br>IN SYNC</small></div><i class="orbit-dot dot-one"></i><i class="orbit-dot dot-two"></i></div>
+    <div class="stats">
+      <div class="stat-card"><span class="stat-icon">⌁</span><h3 id="statBins">0</h3><p>Total active bins</p><small>Across 5 zones</small></div>
+      <div class="stat-card"><span class="stat-icon alert">!</span><h3 id="statFull">0</h3><p>Need pickup</p><small>At 85% capacity or more</small></div>
+      <div class="stat-card"><span class="stat-icon aqua">◒</span><h3 id="statAvg">0%</h3><p>Average fill</p><small>Live sensor average</small></div>
+      <div class="stat-card"><span class="stat-icon blue">✎</span><h3 id="statReports">0</h3><p>Open reports</p><small>Community submitted</small></div>
+    </div>
+  </section>
+
+  <section id="bins">
+    <div class="section-heading"><div><p class="eyebrow">LIVE NETWORK</p><h2>Smart bins</h2></div><span class="live-pill"><i></i> Sensors updating</span></div>
+    <div class="panel toolbar">
+      <label for="filterType">Showing</label><select id="filterType">
+        <option>All</option><option>Organic</option><option>Recyclable</option>
+        <option>General</option><option>E-Waste</option>
+      </select>
+      <button id="routeBtn" class="button primary">Optimize collection route <span>→</span></button>
+    </div>
+    <div id="route" class="panel"></div>
+    <div id="binGrid" class="bins-grid"></div>
+  </section>
+
+  <section id="report">
+    <div class="section-heading"><div><p class="eyebrow">COMMUNITY CARE</p><h2>Report an issue</h2></div></div>
+    <div class="grid2">
+      <form id="reportForm" class="panel">
+        <input name="rLocation" placeholder="Location (e.g. Main St & 5th)" required>
+        <select name="rType">
+          <option>Overflowing bin</option><option>Damaged bin</option>
+          <option>Illegal dumping</option><option>Missed pickup</option>
+        </select>
+        <textarea name="rDesc" rows="4" placeholder="Describe the problem" required></textarea>
+        <button type="submit">Submit Report</button>
+      </form>
+      <div id="reportList" class="list"></div>
+    </div>
+  </section>
+
+  <section id="pickup">
+    <div class="section-heading"><div><p class="eyebrow">ON-DEMAND SERVICE</p><h2>Schedule a pickup</h2></div></div>
+    <div class="grid2">
+      <form id="pickupForm" class="panel">
+        <select name="pzone">
+          <option>North</option><option>South</option><option>East</option>
+          <option>West</option><option>Central</option>
+        </select>
+        <select name="pwtype">
+          <option>Organic</option><option>Recyclable</option>
+          <option>General</option><option>E-Waste</option>
+        </select>
+        <input type="date" name="pdate" required>
+        <button type="submit">Book Pickup</button>
+      </form>
+      <div id="pickupList" class="list"></div>
+    </div>
+  </section>
+
+  <section id="analytics">
+    <div class="section-heading"><div><p class="eyebrow">PERFORMANCE SNAPSHOT</p><h2>Fill level analytics</h2></div></div>
+    <div class="panel"><canvas id="chart" class="chart"></canvas></div>
+  </section>
+
+  <section id="guide">
+    <div class="section-heading"><div><p class="eyebrow">MAKE THE RIGHT SORT</p><h2>Segregation guide</h2></div></div>
+    <div class="guide-grid">
+      <div class="guide card"><h3>🌿 Organic (Green)</h3><p>Food scraps, peels, leaves, garden waste.</p></div>
+      <div class="guide card"><h3>♻️ Recyclable (Blue)</h3><p>Clean paper, cardboard, plastic #1 & #2, glass, metal cans.</p></div>
+      <div class="guide card"><h3>🗑️ General (Grey)</h3><p>Plastic bags, wrappers, ceramics, broken glass.</p></div>
+      <div class="guide card"><h3>🔋 E-Waste (Red)</h3><p>Batteries, phones, cables, chargers. Use drop-off points.</p></div>
+    </div>
+  </section>
+
+  <section id="qa">
+    <div class="section-heading"><div><p class="eyebrow">YOUR WASTE COMPANION</p><h2>Ask EcoSmart AI</h2></div></div>
+    <div class="grid2">
+      <div class="panel">
+        <input id="apiKey" type="password" placeholder="Optional: Anthropic API key for full AI answers">
+        <p class="muted small">The key stays in your browser and is never saved.</p>
+        <form id="qaForm">
+          <textarea id="question" rows="4" placeholder="Ask anything about waste, recycling, pickups or this app..." required></textarea>
+          <button type="submit">Ask</button>
+        </form>
+      </div>
+      <div id="qaList" class="list"></div>
+    </div>
+  </section>
+
+  <footer>© 2026 EcoSmart · Building cleaner cities</footer>
+
+  <div id="toasts" class="toasts"></div>
+  <script src="index.js"></script>
+</body>
+</html>
